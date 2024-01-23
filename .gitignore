@@ -1,0 +1,5 @@
+env/
+.env
+.xlsx
+.vscode
+__pycache__/gi
