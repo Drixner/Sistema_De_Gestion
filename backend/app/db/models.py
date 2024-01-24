@@ -1,7 +1,8 @@
 """
 Define los modelos de la base de datos."""
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float
+import datetime
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -81,6 +82,7 @@ class Sale(Base):
     customer_id = Column(Integer, ForeignKey("customers.id"))
     quantity = Column(Integer)
     sale_price = Column(Float)
+    sale_datetime = Column(DateTime, default=datetime.datetime.utcnow)
 
     product = relationship("Product")
     employee = relationship("Employee")
@@ -111,6 +113,8 @@ class Customer(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
+    last_name = Column(String, index=True)
+    dni = Column(String, unique=True, index=True)
     sales = relationship("Sale", back_populates="customer")
 
 
@@ -122,4 +126,5 @@ class Employee(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
+    last_name = Column(String, index=True)
     sales = relationship("Sale", back_populates="employee")
