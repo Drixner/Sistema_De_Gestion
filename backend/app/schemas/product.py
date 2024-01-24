@@ -1,8 +1,7 @@
 """
 Este modulo sirve para definir los esquemas de los productos"""
-
-from pydantic import BaseModel
 from typing import Optional
+from pydantic import BaseModel
 
 
 class ProductBase(BaseModel):
