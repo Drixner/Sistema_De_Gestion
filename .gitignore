@@ -2,4 +2,4 @@ env/
 .env
 .xlsx
 .vscode
-__pycache__/gi
+__pycache__
