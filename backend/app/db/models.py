@@ -67,3 +67,59 @@ class Product(Base):
 
     family = relationship("Family")
     providers = relationship("Provider", secondary=product_provider_association)
+
+
+class Sale(Base):
+    """
+    Define la tabla de ventas."""
+
+    __tablename__ = "sales"
+
+    id = Column(Integer, primary_key=True, index=True)
+    product_id = Column(Integer, ForeignKey("products.id"))
+    employee_id = Column(Integer, ForeignKey("employees.id"))
+    customer_id = Column(Integer, ForeignKey("customers.id"))
+    quantity = Column(Integer)
+    sale_price = Column(Float)
+
+    product = relationship("Product")
+    employee = relationship("Employee")
+    customer = relationship("Customer")
+
+
+class Purchase(Base):
+    """
+    Define la tabla de compras."""
+
+    __tablename__ = "purchases"
+
+    id = Column(Integer, primary_key=True, index=True)
+    product_id = Column(Integer, ForeignKey("products.id"))
+    provider_id = Column(Integer, ForeignKey("providers.id"))
+    quantity = Column(Integer)
+    purchase_price = Column(Float)
+
+    product = relationship("Product")
+    provider = relationship("Provider")
+
+
+class Customer(Base):
+    """
+    Define la tabla de clientes."""
+
+    __tablename__ = "customers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    sales = relationship("Sale", back_populates="customer")
+
+
+class Employee(Base):
+    """
+    Define la tabla de empleados."""
+
+    __tablename__ = "employees"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    sales = relationship("Sale", back_populates="employee")
