@@ -5,6 +5,8 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..schemas.product import Product, ProductCreate
+from ..schemas.family import Family, FamilyCreate
+from ..schemas.section import Section, SectionCreate
 
 from ..db.database import SessionLocal
 from ..db.models import (
@@ -90,8 +92,8 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
 # Compare this snippet from backend/app/routers/products.py:
 
 
-@router.post("/families/", response_model=DBFamily)
-def create_family(family: DBFamily.FamilyCreate, db: Session = Depends(get_db)):
+@router.post("/families/", response_model=Family)
+def create_family(family: FamilyCreate, db: Session = Depends(get_db)):
     """
     Ruta que crea una familia"""
     db_family = DBFamily(**family.dict())
@@ -101,7 +103,7 @@ def create_family(family: DBFamily.FamilyCreate, db: Session = Depends(get_db)):
     return db_family
 
 
-@router.get("/families/{family_id}", response_model=DBFamily)
+@router.get("/families/{family_id}", response_model=Family)
 def read_family(family_id: int, db: Session = Depends(get_db)):
     """
     Ruta que retorna una familia"""
@@ -111,10 +113,8 @@ def read_family(family_id: int, db: Session = Depends(get_db)):
     return db_family
 
 
-@router.put("/families/{family_id}", response_model=DBFamily)
-def update_family(
-    family_id: int, family: DBFamily.FamilyCreate, db: Session = Depends(get_db)
-):
+@router.put("/families/{family_id}", response_model=Family)
+def update_family(family_id: int, family: FamilyCreate, db: Session = Depends(get_db)):
     """
     Ruta que actualiza una familia"""
     db_family = db.query(DBFamily).filter(DBFamily.id == family_id).first()
@@ -143,8 +143,8 @@ def delete_family(family_id: int, db: Session = Depends(get_db)):
 # Compare this snippet from backend/app/routers/products.py:
 
 
-@router.post("/sections/", response_model=DBSection)
-def create_section(section: DBSection.SectionCreate, db: Session = Depends(get_db)):
+@router.post("/sections/", response_model=Section)
+def create_section(section: SectionCreate, db: Session = Depends(get_db)):
     """
     Ruta que crea una sección"""
     db_section = DBSection(**section.dict())
@@ -154,7 +154,7 @@ def create_section(section: DBSection.SectionCreate, db: Session = Depends(get_d
     return db_section
 
 
-@router.get("/sections/{section_id}", response_model=DBSection)
+@router.get("/sections/{section_id}", response_model=Section)
 def read_section(section_id: int, db: Session = Depends(get_db)):
     """
     Ruta que retorna una sección"""
@@ -164,9 +164,9 @@ def read_section(section_id: int, db: Session = Depends(get_db)):
     return db_section
 
 
-@router.put("/sections/{section_id}", response_model=DBSection)
+@router.put("/sections/{section_id}", response_model=Section)
 def update_section(
-    section_id: int, section: DBSection.SectionCreate, db: Session = Depends(get_db)
+    section_id: int, section: SectionCreate, db: Session = Depends(get_db)
 ):
     """
     Ruta que actualiza una sección"""

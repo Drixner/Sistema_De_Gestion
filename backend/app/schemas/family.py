@@ -1,8 +1,8 @@
 """
 Este esquema sirve para definir los esquemas de las familias
 """
+from typing import Optional
 from pydantic import BaseModel
-from typing import List, Optional
 
 
 class FamilyBase(BaseModel):
