@@ -2,7 +2,6 @@
 Define los modelos de la base de datos."""
 
 import datetime
-from enum import Enum
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -90,16 +89,6 @@ class Sale(Base):
     customer = relationship("Customer")
 
 
-class PurchaseStatus(Enum):
-    """
-    Define los estados de una compra"""
-
-    PENDING = "pending"
-    PAID = "paid"
-    RECEIVED = "received"
-    REJECTED = "rejected"
-
-
 class Purchase(Base):
     """
     Define la tabla de compras."""
@@ -112,7 +101,6 @@ class Purchase(Base):
     quantity = Column(Integer)
     purchase_price = Column(Float)
     purchase_date = Column(DateTime, default=datetime.datetime.utcnow)
-    status = Column(Enum(PurchaseStatus), default=PurchaseStatus.PENDING)
 
     product = relationship("Product")
     provider = relationship("Provider")

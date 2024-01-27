@@ -1,13 +1,13 @@
 """
 Este modulo sirve para definir las rutas de los productos"""
 from typing import List
-from db.database import SessionLocal
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from ..schemas.product import Product, ProductCreate
 
-from schemas.product import Product, ProductCreate
-from backend.app.db.models import (
+from ..db.database import SessionLocal
+from ..db.models import (
     Product as DBProduct,
     Family as DBFamily,
     Section as DBSection,
